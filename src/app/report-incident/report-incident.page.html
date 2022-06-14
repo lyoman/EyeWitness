@@ -1,0 +1,891 @@
+<ion-header>
+  <ion-toolbar color="primary">
+      <ion-buttons slot="start">
+          <ion-back-button autoHide="false"></ion-back-button>
+      </ion-buttons>
+      <ion-title class="title" style="margin-right: 50px;" class="ion-text-center">
+          Report new incident
+      </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding animated fadeIn login auth-page">
+  <div class="login-content" *ngIf="!loading">
+      <form class="list-form">
+
+          <div id="universal" *ngIf="hideHeading === 'true'">
+              Please fill in this form with every detail that you have about the incident that has occured. You can
+              also attach pictures and videos.
+          </div><br>
+
+          <div class="form" *ngIf="onHome === 'false'">
+              <ion-item>
+                  <ion-label position="floating" style="color: #6d0101;">
+                      <ion-icon name="person" item-start class="text-warning"></ion-icon>
+                      Choose violation
+                  </ion-label>
+
+                  <ion-select interface="action-sheet" (ngModelChange)="violationType($event)" cancelText="Cancel"
+                      okText="Okay!" placeholder="Type of violation"
+                      class="myCustomSelect form-control custom-options" [(ngModel)]="new_case.type_of_violation"
+                      name="type_of_violation">
+                      <ion-select-option value="Forced displacement">Forced displacement </ion-select-option>
+                      <ion-select-option value="Exposure to pollutants">Exposure to pollutants</ion-select-option>
+                      <ion-select-option value="Loss of land or economic assets">Loss of land or economic assets
+                      </ion-select-option>
+                      <ion-select-option value="Desecration of cultural heritage including graves">Desecration of Cultural Heritage Sites</ion-select-option>
+                      <ion-select-option value="Torture, intimidation and harassment">Torture, intimidation and
+                          harassment
+                      </ion-select-option>
+                      <ion-select-option value="Restricted freedom of movement">Restricted freedom of movement
+                      </ion-select-option>
+                      <ion-select-option value="Limited access to water">Limited access to water</ion-select-option>
+                      <ion-select-option value="Forced and unpaid labour">Forced and unpaid labour</ion-select-option>
+                      <ion-select-option value="Child labour">Child labour </ion-select-option>
+                      <ion-select-option value="Murder or killings">Murder or killings</ion-select-option>
+                      <ion-select-option value="Sexual violence">Sexual violence</ion-select-option>
+                  </ion-select>
+              </ion-item>
+
+              <ion-item>
+                  <ion-label position="floating" style="color: #6d0101;">
+                      <ion-icon name="calendar" item-start class="text-warning"></ion-icon>
+                      Date of incident
+                  </ion-label>
+                  <ion-input type="date" [(ngModel)]="new_case.date_reported" name="date_reported"></ion-input>
+              </ion-item>
+
+              <div id="violation" *ngIf="forced === 'true'">
+                  <h2>Forced displacement</h2>
+                  <ion-item>
+                      <ion-label style="color: #6d0101;" class="ion-text-wrap" position="floating">
+                          <ion-icon name="cash" item-start class="text-warning"></ion-icon>
+                          How many people have been forcibly displaced?
+                      </ion-label><br>
+                      <ion-input type="number" [(ngModel)]="new_case.fd_how_many_removed" name="fd_how_many_removed"></ion-input>
+                  </ion-item>
+
+
+                  <ion-item>
+                      <ion-label style="color: #6d0101;" class="ion-text-wrap" position="floating">
+                          <ion-icon name="cash" item-start class="text-warning"></ion-icon>
+                          Have they been offered alternative places to stay?
+                      </ion-label><br>
+                      <ion-select interface="action-sheet" cancelText="Cancel" okText="Okay!" placeholder="Yes / No"
+                          class="myCustomSelect form-control custom-options" [(ngModel)]="new_case.fd_alternative_place"
+                          name="fd_alternative_place">
+                          <ion-select-option value="Yes">Yes</ion-select-option>
+                          <ion-select-option value="No">No</ion-select-option>
+                      </ion-select>
+                      <ion-input type="text" placeholder="optional description" [(ngModel)]="new_case.fd_alternative_place_description"
+                          name="fd_alternative_place_description">
+                      </ion-input>
+                  </ion-item>
+              </div>
+
+              <div id="violation" *ngIf="exposure === 'true'">
+                  <h2>Exposure to pollutants</h2>
+                  <ion-item>
+                      <ion-label style="color: #6d0101;" class="ion-text-wrap" position="floating">
+                          <ion-icon name="cash" item-start class="text-warning"></ion-icon>
+                          What kind of pollution have they been exposed to?
+                      </ion-label><br>
+                      <ion-select cancelText="Cancel" okText="Okay!" placeholder="air pollution"
+                          class="ion-text-wrap myCustomSelect form-control custom-options"
+                          [(ngModel)]="new_case.ep_what_kind" name="ep_what_kind">
+                          <ion-select-option value="land pollution">land pollution</ion-select-option>
+                          <ion-select-option value="water pollution">water pollution</ion-select-option>
+                          <ion-select-option value="air pollution">air pollution</ion-select-option>
+                          <ion-select-option value="noise pollution">noise pollution</ion-select-option>
+                          <ion-select-option value="radioactive pollution">radioactive pollution</ion-select-option>
+                          <!-- Radioactive pollution -->
+                      </ion-select>
+                  </ion-item>
+
+
+                  <ion-item>
+                      <ion-label style="color: #6d0101;" class="ion-text-wrap" position="floating">
+                          <ion-icon name="cash" item-start class="text-warning"></ion-icon>
+                          What is the source of the pollution?
+                      </ion-label><br>
+                      <ion-select interface="action-sheet" cancelText="Cancel" okText="Okay!"
+                          placeholder="Source of pollution" class="myCustomSelect form-control custom-options"
+                          [(ngModel)]="new_case.ep_source" name="ep_source">
+                          <ion-select-option value="factory">factory</ion-select-option>
+                          <ion-select-option value="mine effluent">mine effluent</ion-select-option>
+                          <ion-select-option value="gases">gases</ion-select-option>
+                      </ion-select>
+                      <ion-input type="text" placeholder="optional description" [(ngModel)]="new_case.ep_source_description"
+                          name="ep_source_description">
+                      </ion-input>
+                  </ion-item>
+
+                  <ion-item>
+                      <ion-label style="color: #6d0101;" class="ion-text-wrap" position="floating">
+                          <ion-icon name="cash" item-start class="text-warning"></ion-icon>
+                          How many people have been exposed to this pollution?
+                      </ion-label>
+                      <ion-input type="number" placeholder="number of people exposed" [(ngModel)]="new_case.ep_num_people_exposed"
+                          name="ep_num_people_exposed">
+                      </ion-input>
+                  </ion-item>
+
+                  <ion-item>
+                      <ion-label style="color: #6d0101;" class="ion-text-wrap" position="floating">
+                          <ion-icon name="cash" item-start class="text-warning"></ion-icon>
+                          Who is responsible for the pollution (name of company)?
+                      </ion-label>
+                      <ion-input type="text" placeholder="name of the company" [(ngModel)]="new_case.ep_who_is_responsible"
+                          name="ep_who_is_responsible">
+                      </ion-input>
+                  </ion-item>
+              </div>
+
+              <div id="violation" *ngIf="loss === 'true'">
+                  <h2>Loss of land or economic assets</h2>
+
+                  <ion-item>
+                      <ion-label style="color: #6d0101;" class="ion-text-wrap" position="floating">
+                          <ion-icon name="cash" item-start class="text-warning"></ion-icon>
+                          What economic assets have you lost ? - livestock, agricultural land, other specify
+                      </ion-label>
+                      <ion-input type="text" [(ngModel)]="new_case.ll_assests_lost" name="ll_assests_lost">
+                      </ion-input>
+                  </ion-item>
+
+                  <ion-item>
+                      <ion-label style="color: #6d0101;" class="ion-text-wrap" position="floating">
+                          <ion-icon name="cash" item-start class="text-warning"></ion-icon>
+                          Who is responsible for the loss (company name)?
+                      </ion-label>
+                      <ion-input type="text" [(ngModel)]="new_case.ll_who_is_responsible" name="ll_who_is_responsible">
+                      </ion-input>
+                  </ion-item>
+
+                  <ion-item>
+                      <ion-label style="color: #6d0101;" class="ion-text-wrap" position="floating">
+                          <ion-icon name="cash" item-start class="text-warning"></ion-icon>
+                          How many families were affected?
+                      </ion-label>
+                      <ion-input type="number" [(ngModel)]="new_case.ll_families_affected" name="ll_families_affected">
+                      </ion-input>
+                  </ion-item>
+              </div>
+
+              <div id="violation" *ngIf="cultural === 'true'">
+                  <h2>Desecration of cultural heritage sites</h2>
+
+                  <ion-item>
+                      <ion-label style="color: #6d0101;" class="ion-text-wrap" position="floating">
+                          <ion-icon name="cash" item-start class="text-warning"></ion-icon>
+                          How many sites were desecrated?
+                      </ion-label>
+                      <ion-input type="number" [(ngModel)]="new_case.dc_how_many_graves" name="dc_how_many_graves">
+                      </ion-input>
+                  </ion-item>
+
+                  <ion-item>
+                      <ion-label style="color: #6d0101;" class="ion-text-wrap" position="floating">
+                          <ion-icon name="cash" item-start class="text-warning"></ion-icon>
+                          Who desecrated them?
+                      </ion-label>
+                      <ion-input type="text" [(ngModel)]="new_case.dc_who_desecrated_them" name="dc_who_desecrated_them">
+                      </ion-input>
+                  </ion-item>
+              </div>
+
+              <div id="violation" *ngIf="torture === 'true'">
+                  <h2>Torture, intimidation and harassment</h2>
+                  <ion-item>
+                      <ion-label style="color: #6d0101;" class="ion-text-wrap" position="floating">
+                          <ion-icon name="cash" item-start class="text-warning"></ion-icon>
+                          Type
+                      </ion-label>
+                      <ion-select (ngModelChange)="otherOption($event)" multiple="true" cancelText="Cancel" okText="Okay!"
+                          class="ion-text-wrap myCustomSelect form-control custom-options"
+                          [(ngModel)]="new_case.ti_type" name="ti_type">
+                          <ion-select-option value="dog bites">dog bites</ion-select-option>
+                          <ion-select-option value="beatings">beatings</ion-select-option>
+                          <ion-select-option value="physical injury">physical injury</ion-select-option>
+                          <ion-select-option value="abduction">abduction</ion-select-option>
+                          <ion-select-option value="other">other</ion-select-option>
+                      </ion-select>
+                      <ion-input *ngIf="otherOption1 === 'true'" type="text"
+                          placeholder="other torture, intimidation and harassment" [(ngModel)]="new_case.ti_other"
+                          name="ti_other">
+                      </ion-input>
+                  </ion-item>
+
+
+                  <ion-item>
+                      <ion-label style="color: #6d0101;" class="ion-text-wrap" position="floating">
+                          <ion-icon name="cash" item-start class="text-warning"></ion-icon>
+                          Which groups of people were affected ?
+                      </ion-label>
+                      <ion-select cancelText="Cancel" okText="Okay!"
+                          class="myCustomSelect form-control custom-options" [(ngModel)]="new_case.ti_groups_affected"
+                          name="ti_groups_affected">
+                          <ion-select-option value="women">Women</ion-select-option>
+                          <ion-select-option value="girls">Girls</ion-select-option>
+                          <ion-select-option value="artisanal miners">Artisanal miners</ion-select-option>
+                          <ion-select-option value="local men">Local men</ion-select-option>
+                      </ion-select>
+                  </ion-item>
+
+                  <ion-item>
+                      <ion-label style="color: #6d0101;" class="ion-text-wrap" position="floating">
+                          <ion-icon name="cash" item-start class="text-warning"></ion-icon>
+                          Who did this ?
+                      </ion-label>
+                      <ion-select cancelText="Cancel" okText="Okay!"
+                          class="myCustomSelect form-control custom-options" [(ngModel)]="new_case.ti_who_did_this"
+                          name="ti_who_did_this">
+                          <ion-select-option value="soldiers">Soldiers</ion-select-option>
+                          <ion-select-option value="police">Police</ion-select-option>
+                          <ion-select-option value="security guards">Security guards</ion-select-option>
+                          <ion-select-option value="company employees">Company employees</ion-select-option>
+                      </ion-select>
+                  </ion-item>
+
+                  <ion-item>
+                      <ion-label style="color: #6d0101;" class="ion-text-wrap" position="floating">
+                          <ion-icon name="cash" item-start class="text-warning"></ion-icon>
+                          Which company was involved ?
+                      </ion-label>
+                      <ion-input type="text" [(ngModel)]="new_case.ti_company_involved" name="ti_company_involved">
+                      </ion-input>
+                  </ion-item>
+
+                  <!-- What did they say was the reason for this?  -->
+                  <ion-item>
+                      <ion-label style="color: #6d0101;" class="ion-text-wrap" position="floating">
+                          <ion-icon name="cash" item-start class="text-warning"></ion-icon>
+                          What did they say was the reason for this ?
+                      </ion-label>
+                      <ion-input type="text" [(ngModel)]="new_case.ti_the_reason" name="ti_the_reason">
+                      </ion-input>
+                  </ion-item>
+
+              </div>
+
+              <div id="violation" *ngIf="freedom === 'true'">
+                  <h2>Restricted freedom of movement</h2>
+                  <ion-item>
+                      <ion-label style="color: #6d0101;" class="ion-text-wrap" position="floating">
+                          <ion-icon name="cash" item-start class="text-warning"></ion-icon>
+                          Which company was involved?
+                      </ion-label>
+                      <ion-input type="text" [(ngModel)]="new_case.rf_company_involved" name="rf_company_involved">
+                      </ion-input>
+                  </ion-item>
+              </div>
+
+              <div id="violation" *ngIf="water === 'true'">
+                  <h2>Limited access to water</h2>
+                  <ion-item>
+                      <ion-label style="color: #6d0101;" class="ion-text-wrap" position="floating">
+                          <ion-icon name="cash" item-start class="text-warning"></ion-icon>
+                          Which company was involved?
+                      </ion-label>
+                      <ion-input type="text" [(ngModel)]="new_case.la_company_involved" name="la_company_involved">
+                      </ion-input>
+                  </ion-item>
+              </div>
+
+              <div id="violation" *ngIf="labour === 'true'">
+                  <h2>Forced and unpaid labour</h2>
+                  <ion-item>
+                      <ion-label style="color: #6d0101;" class="ion-text-wrap" position="floating">
+                          <ion-icon name="cash" item-start class="text-warning"></ion-icon>
+                          Which company was involved?
+                      </ion-label>
+                      <ion-input type="text" [(ngModel)]="new_case.fu_company_involved" name="fu_company_involved">
+                      </ion-input>
+                  </ion-item>
+              </div>
+
+              <div id="violation" *ngIf="child === 'true'">
+                  <h2>Child labour</h2>
+                  <ion-item>
+                      <ion-label style="color: #6d0101;" class="ion-text-wrap" position="floating">
+                          <ion-icon name="cash" item-start class="text-warning"></ion-icon>
+                          Which company was involved?
+                      </ion-label>
+                      <ion-input type="text" [(ngModel)]="new_case.cl_company_involved" name="cl_company_involved">
+                      </ion-input>
+                  </ion-item>
+
+                  <ion-item>
+                      <ion-label style="color: #6d0101;" class="ion-text-wrap" position="floating">
+                          <ion-icon name="cash" item-start class="text-warning"></ion-icon>
+                          Number of children involved
+                      </ion-label>
+                      <ion-input type="number" [(ngModel)]="new_case.cl_number_of_children" name="cl_number_of_children">
+                      </ion-input>
+                  </ion-item>
+              </div>
+
+              <div id="violation" *ngIf="violence === 'true'">
+                  <h2>Sexual violence</h2>
+                  <ion-item>
+                      <ion-label style="color: #6d0101;" class="ion-text-wrap" position="floating">
+                          <ion-icon name="cash" item-start class="text-warning"></ion-icon>
+                          Who is / are affected ?
+                      </ion-label>
+                      <ion-select cancelText="Cancel" okText="Okay!"
+                          class="ion-text-wrap myCustomSelect form-control custom-options"
+                          [(ngModel)]="new_case.sv_affected_people" name="sv_affected_people">
+                          <ion-select-option value="girls">Girls</ion-select-option>
+                          <ion-select-option value="women">Women</ion-select-option>
+                          <ion-select-option value="men">Men</ion-select-option>
+                      </ion-select>
+                  </ion-item>
+
+
+                  <ion-item>
+                      <ion-label style="color: #6d0101;" class="ion-text-wrap" position="floating">
+                          <ion-icon name="cash" item-start class="text-warning"></ion-icon>
+                          Type of sexual violence
+                      </ion-label>
+                      <ion-select cancelText="Cancel" okText="Okay!"
+                          class="myCustomSelect form-control custom-options" [(ngModel)]="new_case.sv_type"
+                          name="sv_type">
+                          <ion-select-option value="rape">Rape</ion-select-option>
+                          <ion-select-option value="sexual favours">Sexual favours</ion-select-option>
+                          <ion-select-option value="indecent assault">Indecent assault</ion-select-option>
+                      </ion-select>
+                  </ion-item>
+
+                  <ion-item>
+                      <ion-label style="color: #6d0101;" class="ion-text-wrap" position="floating">
+                          <ion-icon name="cash" item-start class="text-warning"></ion-icon>
+                          Which company was involved ?
+                      </ion-label>
+                      <ion-input type="text" [(ngModel)]="new_case.sv_company_involved" name="sv_company_involved">
+                      </ion-input>
+                  </ion-item>
+
+                  <ion-item>
+                      <ion-label style="color: #6d0101;" class="ion-text-wrap" position="floating">
+                          <ion-icon name="cash" item-start class="text-warning"></ion-icon>
+                          Who did this?
+                      </ion-label>
+                      <ion-select cancelText="Cancel" okText="Okay!"
+                          class="myCustomSelect form-control custom-options" [(ngModel)]="new_case.sv_who_did_this"
+                          name="sv_who_did_this">
+                          <ion-select-option value="soldiers">Soldiers</ion-select-option>
+                          <ion-select-option value="police">Police</ion-select-option>
+                          <ion-select-option value="security guards">Security guards</ion-select-option>
+                          <ion-select-option value="company employees">Company employees</ion-select-option>
+                      </ion-select>
+                  </ion-item>
+
+              </div>
+
+              <div id="violation" *ngIf="murder === 'true'">
+                  <h2>Murder or killings</h2>
+                  <ion-item>
+                      <ion-label style="color: #6d0101;" class="ion-text-wrap" position="floating">
+                          <ion-icon name="cash" item-start class="text-warning"></ion-icon>
+                          Groups of persons murdered
+                      </ion-label>
+                      <ion-select cancelText="Cancel" okText="Okay!"
+                          class="ion-text-wrap myCustomSelect form-control custom-options"
+                          [(ngModel)]="new_case.mk_groups_of_persons" name="mk_groups_of_persons">
+                          <ion-select-option value="artisanal miners">Artisanal miners</ion-select-option>
+                          <ion-select-option value="company workers">Company workers</ion-select-option>
+                          <ion-select-option value="women">Women</ion-select-option>
+                          <ion-select-option value="men">Men</ion-select-option>
+                          <ion-select-option value="minors">Minors</ion-select-option>
+                      </ion-select>
+                  </ion-item>
+
+                  <ion-item>
+                      <ion-label style="color: #6d0101;" class="ion-text-wrap" position="floating">
+                          <ion-icon name="cash" item-start class="text-warning"></ion-icon>
+                          Number of people killed
+                      </ion-label>
+                      <ion-input type="number" [(ngModel)]="new_case.mk_number_of_people" name="mk_number_of_people">
+                      </ion-input>
+                  </ion-item>
+
+
+                  <ion-item>
+                      <ion-label style="color: #6d0101;" class="ion-text-wrap" position="floating">
+                          <ion-icon name="cash" item-start class="text-warning"></ion-icon>
+                          How the people were killed
+                      </ion-label>
+                      <ion-select multiple="true" (ngModelChange)="murderOption($event)" cancelText="Cancel" okText="Okay!"
+                          class="myCustomSelect form-control custom-options" [(ngModel)]="new_case.mk_how_they_died"
+                          name="mk_how_they_died">
+                          <ion-select-option value="gunshots">Gunshots</ion-select-option>
+                          <ion-select-option value="beatings">Beatings</ion-select-option>
+                          <ion-select-option value="dogbites">Dogbites</ion-select-option>
+                          <ion-select-option value="equipment">Equipment</ion-select-option>
+                          <ion-select-option value="other weapons">Other weapons</ion-select-option>
+                      </ion-select>
+
+                      <ion-input *ngIf="murderOption1 === 'true'" placeholder="describe other wapons" type="text"
+                          [(ngModel)]="new_case.mk_murder_other" name="mk_murder_other">
+                      </ion-input>
+                  </ion-item>
+
+                  <ion-item>
+                      <ion-label style="color: #6d0101;" class="ion-text-wrap" position="floating">
+                          <ion-icon name="cash" item-start class="text-warning"></ion-icon>
+                          Company involved
+                      </ion-label>
+                      <ion-input type="text" [(ngModel)]="new_case.mk_company_involved" name="mk_company_involved">
+                      </ion-input>
+                  </ion-item>
+
+              </div>
+
+          </div>
+
+          <div *ngIf="locationDiv === 'true'" class="form" id="divLocation">
+              <h2>Location Details</h2>
+              <ion-item>
+                  <ion-label style="color: #6d0101;" position="floating">
+                      <ion-icon name="cash" item-start class="text-warning"></ion-icon>
+                      Province
+                  </ion-label>
+                  <ion-select interface="action-sheet" (ngModelChange)="switchProvince($event)" cancelText="Cancel"
+                      okText="Okay!" placeholder="Select province"
+                      class="myCustomSelect form-control custom-options" [(ngModel)]="new_case.province"
+                      name="province">
+                      <ion-select-option *ngFor="let item of provinces" value="{{ item.name }}"> {{ item.name }} </ion-select-option>
+                  </ion-select>
+              </ion-item>
+
+              <ion-item>
+                  <ion-label style="color: #6d0101;" position="floating">
+                      <ion-icon name="cash" item-start class="text-warning"></ion-icon>
+                      District
+                  </ion-label>
+                  <ion-select interface="action-sheet" cancelText="Cancel"
+                      okText="Okay!" placeholder="Select district"
+                      class="myCustomSelect form-control custom-options" [(ngModel)]="new_case.district"
+                      name="district">
+                      <ion-select-option *ngFor="let item of district" value="{{ item.name }}"> {{ item.name }} </ion-select-option>
+                  </ion-select>
+              </ion-item>
+
+              <ion-item>
+                  <ion-label style="color: #6d0101;" position="floating">
+                      <ion-icon name="cash" item-start class="text-warning"></ion-icon>
+                      Ward name
+                  </ion-label>
+                  <ion-input type="text" [(ngModel)]="new_case.ward_name" name="ward_name">
+                  </ion-input>
+              </ion-item>
+          </div>
+
+          <div id="victims" *ngIf="victimDiv === 'true'">
+              <h2>Victim Details</h2>
+              <p>Press the add button to add more victims.</p>
+
+              <div *ngIf="victimsArray">
+                  <ion-list *ngFor="let user of victimsArray">
+                      <ion-item>
+                          <ion-label>
+                              <h1>{{ user.victim_description }}</h1>
+                              <h2 style="white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;">{{ user.victim_age }}, {{ user.victim_gender }}</h2>
+                          </ion-label>
+                          <ion-icon name="trash" item-right color="danger" (click)="removeVictims(user)"></ion-icon>
+                      </ion-item>
+                  </ion-list>
+              </div>
+
+
+              <ion-grid>
+                  <ion-row>
+                      <ion-col size="12">
+                          <ion-item>
+                              <ion-label position="floating" style="color: #6d0101;">
+                                  <ion-icon name="cash" item-start class="text-warning"></ion-icon>
+                                  Description of victims
+                              </ion-label>
+
+                              <ion-select multiple="true" [(ngModel)]="victim_.victim_description"
+                                  name="victim_description">
+                                  <ion-select-option value="Community member (individual/group)">Community member (individual/group)
+                                  </ion-select-option>
+                                  <ion-select-option value="Household">Household</ion-select-option>
+                                  <ion-select-option value="Mining company ">Mining company </ion-select-option>
+                                  <ion-select-option value="Traditional leader">Traditional leader</ion-select-option>
+                                  <ion-select-option value="Farmer">Farmer</ion-select-option>
+                                  <ion-select-option value="Community activist">Community activist</ion-select-option>
+                                  <ion-select-option value="School children">School children</ion-select-option>
+                              </ion-select>
+                              <ion-label position="floating" style="color: #6d0101;" class="ion-text-wrap">
+                                  <ion-icon name="cash" item-start class="text-warning"></ion-icon>
+                                  Describe victims (optional)
+                              </ion-label>
+                              <ion-input type="text" [(ngModel)]="victim_.victim_description_other"
+                                  name="victim_description_other">
+                              </ion-input>
+                          </ion-item>
+                      </ion-col>
+
+                      <ion-col size="6">
+                          <ion-item>
+                              <ion-label style="color: #6d0101;" position="floating">
+                                  <ion-icon name="cash" item-start class="text-warning"></ion-icon>
+                                  Victim age
+                              </ion-label>
+                              <ion-select class="myCustomSelect form-control custom-options"
+                                  [(ngModel)]="victim_.victim_age" name="victim_age">
+                                  <ion-select-option value="Senior citizen">Senior citizen (65+)</ion-select-option>
+                                  <ion-select-option value="Adult">Adult</ion-select-option>
+                                  <ion-select-option value="Minor">Minor</ion-select-option>
+                              </ion-select>
+                          </ion-item>
+                      </ion-col>
+
+                      <ion-col size="6">
+                          <ion-item>
+                              <ion-label style="color: #6d0101;" position="floating">
+                                  <ion-icon name="cash" item-start class="text-warning"></ion-icon>
+                                  Gender
+                              </ion-label>
+                              <ion-select class="myCustomSelect form-control custom-options"
+                                  [(ngModel)]="victim_.victim_gender" name="victim_gender">
+                                  <ion-select-option value="Male">Male</ion-select-option>
+                                  <ion-select-option value="Female">Female</ion-select-option>
+                                  <ion-select-option value="Both">Both</ion-select-option>
+                              </ion-select>
+                          </ion-item>
+                      </ion-col>
+
+                      <ion-col size="6">
+                          <ion-button style="color: white !important;background-color: #d4af37;"
+                              (click)="handleVictimsChange()">Add victim</ion-button>
+                      </ion-col>
+                  </ion-row>
+              </ion-grid>
+          </div>
+
+          <div id="perpetrator" *ngIf="pepDiv === 'true'">
+              <h2>Details of the perpetrator</h2>
+              <p>Press the add button to add more perpetrators.</p>
+
+              <div *ngIf="perpetratorArray">
+                  <ion-list *ngFor="let user of perpetratorArray">
+                      <ion-item>
+                          <ion-label>
+                              <h1>{{ user.description_of_perpetrator }}</h1>
+                              <p>{{ user.perpetrator_age }}</p>
+                          </ion-label>
+                          <ion-icon name="trash" item-right color="danger" (click)="removePerpetrator(user)">
+                          </ion-icon>
+                      </ion-item>
+                  </ion-list>
+              </div>
+              <ion-grid>
+                  <ion-row>
+                      <ion-col size="12">
+                          <ion-item>
+                              <ion-label position="floating" style="color: #6d0101;">
+                                  <ion-icon name="cash" item-start class="text-warning"></ion-icon>
+                                  Description of the perpetrator
+                              </ion-label>
+                              <ion-select interface="action-sheet" (ngModelChange)="ivCompany($event)"
+                                  placeholder="Please select" [(ngModel)]="perpetrator.description_of_perpetrator"
+                                  name="description_of_perpetrator">
+                                  <ion-select-option value="Mining company security guards">Mining company security
+                                      guards
+                                  </ion-select-option>
+                                  <ion-select-option value="Artisanal miners ">Artisanal miners </ion-select-option>
+                                  <ion-select-option value="Government security agencies">Government security
+                                      (police, army)</ion-select-option>
+                                  <ion-select-option value="Politician">Politician</ion-select-option>
+                                  <ion-select-option value="Councilors">Councilors</ion-select-option>
+                                  <ion-select-option value="Member of Parliament">Member of Parliament
+                                  </ion-select-option>
+                              </ion-select>
+
+                              <ion-label position="floating" style="color: #6d0101;">
+                                  <ion-icon name="cash" item-start class="text-warning"></ion-icon>
+                                  Describe the perpetrator (optional)
+                              </ion-label>
+                              <ion-input type="text" [(ngModel)]="perpetrator.description_of_perpetrator_other"
+                                  name="description_of_perpetrator_other"></ion-input>
+                          </ion-item>
+                      </ion-col>
+
+                      <ion-col size="6">
+                          <ion-item>
+                              <ion-label style="color: #6d0101;" position="floating">
+                                  <ion-icon name="cash" item-start class="text-warning"></ion-icon>
+                                  Age
+                              </ion-label>
+                              <ion-select class="myCustomSelect form-control custom-options"
+                                  [(ngModel)]="perpetrator.perpetrator_age" name="perpetrator_age">
+                                  <ion-select-option value="Senior citizen">Senior citizen</ion-select-option>
+                                  <ion-select-option value="Adult">Adult</ion-select-option>
+                                  <ion-select-option value="Minor">Minor</ion-select-option>
+                              </ion-select>
+                          </ion-item>
+                      </ion-col>
+
+                      <ion-col size="6">
+                          <ion-button style="color: white !important;background-color: #d4af37;"
+                              (click)="handlePerpetratorChange()">Add perpetrator</ion-button>
+                      </ion-col>
+
+                      <ion-list *ngIf="involves_company === 'true'">
+                          <ion-list-header>
+                              <h2>Company details</h2>
+                          </ion-list-header>
+                          <ion-item>
+                              <ion-label position="floating" style="color: #6d0101;">
+                                  <ion-icon name="calendar" item-start class="text-warning"></ion-icon>
+                                  Comapany name
+                              </ion-label>
+                              <ion-input type="text" [(ngModel)]="company_.company_name" name="company_name">
+                              </ion-input>
+                          </ion-item>
+
+                          <ion-item>
+                              <ion-label position="floating" style="color: #6d0101;">
+                                  <ion-icon name="calendar" item-start class="text-warning"></ion-icon>
+                                  Location
+                              </ion-label>
+                              <ion-input type="text" [(ngModel)]="company_.company_location" name="company_location"></ion-input>
+                          </ion-item>
+
+                          <ion-item>
+                              <ion-label position="floating" style="color: #6d0101;">
+                                  <ion-icon name="calendar" item-start class="text-warning"></ion-icon>
+                                  Description
+                              </ion-label>
+                              <ion-input type="text" [(ngModel)]="company_.company_description" name="company_description">
+                              </ion-input>
+                          </ion-item>
+                      </ion-list>.
+                  </ion-row>
+              </ion-grid>
+          </div>
+
+          <div *ngIf="whatTranspired === 'true'" id="whatTranspired">
+              <h2>Description of what transpired responding to the following questions</h2>
+
+              <ion-item>
+                  <ion-label position="floating" style="color: #6d0101;">
+                      <!-- <ion-icon name="cash" item-start class="text-warning"></ion-icon> -->
+                      
+                  </ion-label>
+
+                  <textarea placeholder="What happened ?" rows="5" cols="30" [(ngModel)]="new_case.what_happened" name="what_happened"
+                      class="form-control"></textarea>
+
+              </ion-item>
+
+              <ion-item>
+
+                  <form [formGroup]="filesForm" (ngSubmit)="saveClosureRawMaterials()">
+
+                      <br />
+                      <div class="row" *ngIf="!loading">
+                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                
+                
+                        </div>
+                
+                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                          <div class="form-group">
+                            <ion-label for="exampleFormControlInput1">Upload images</ion-label>
+                            <ion-input type="file" (change)="onFileChange($event)" formControlName="file"
+                              class="form-control"></ion-input>
+                          </div>
+
+                          <div *ngIf="imagesArray">
+                              <ion-list *ngFor="let user of imagesArray">
+                                  <ion-item>
+                                      <ion-label>
+                                          <h1>{{ user.name }}</h1>
+                                          <p>{{ user.type }}, {{ user.file }}</p>
+                                          <h2 style="white-space: nowrap;
+                                overflow: hidden;
+                                text-overflow: ellipsis;">{{ user.timestamp }}</h2>
+                                      </ion-label>
+                                      <ion-icon name="trash" item-right color="danger" (click)="removeImage(user)"></ion-icon>
+                                  </ion-item>
+                              </ion-list>
+                          </div>
+                
+                          <div class="form-group">
+                            <ion-label for="exampleFormControlInput1">Upload audios</ion-label>
+                            <ion-input type="file" (change)="onFileChange1($event)" formControlName="file"
+                              class="form-control"></ion-input>
+                          </div>
+
+                          <div *ngIf="audiosArray">
+                              <ion-list *ngFor="let user of audiosArray">
+                                  <ion-item>
+                                      <ion-label>
+                                          <h1>{{ user.name }}</h1>
+                                          <p>{{ user.type }}, {{ user.file }}</p>
+                                          <h2 style="white-space: nowrap;
+                                overflow: hidden;
+                                text-overflow: ellipsis;">{{ user.timestamp }}</h2>
+                                      </ion-label>
+                                      <ion-icon name="trash" item-right color="danger" (click)="removeAudio(user)"></ion-icon>
+                                  </ion-item>
+                              </ion-list>
+                          </div>
+
+                          <div class="form-group">
+                              <ion-label for="exampleFormControlInput1">Upload videos</ion-label>
+                              <ion-input type="file" (change)="onFileChange2($event)" formControlName="file"
+                                class="form-control"></ion-input>
+                            </div>
+
+                            <div *ngIf="videosArray">
+                              <ion-list *ngFor="let user of videosArray">
+                                  <ion-item>
+                                      <ion-label>
+                                          <h1>{{ user.name }}</h1>
+                                          <p>{{ user.type }}, {{ user.file }}</p>
+                                          <h2 style="white-space: nowrap;
+                                overflow: hidden;
+                                text-overflow: ellipsis;">{{ user.timestamp }}</h2>
+                                      </ion-label>
+                                      <ion-icon name="trash" item-right color="danger" (click)="removeVideo(user)"></ion-icon>
+                                  </ion-item>
+                              </ion-list>
+                          </div>
+                        </div>
+                      </div>
+                      <div *ngIf="loading" class="text ion-text-center myloader">
+                        <img height="200" width="auto" src="assets/imgs/tenor.gif">
+                        <div class="text">
+                          Loading....
+                        </div>
+                      </div>
+                    </form>
+
+              </ion-item>
+          </div>
+
+          <!-- Contact details of reporting person -->
+          <div id="contactInfo" *ngIf="contactInfo === 'true'">
+              <h2>Contact details of reporting person</h2>
+              <p>Please provide your contact details if you wish to do so. You can skip this option if you are not
+                  comfortable to do so, but it will help us to get in touch with you for further information, thank
+                  you.</p>
+
+              <ion-item>
+                  <ion-label position="floating" style="color: #6d0101;">
+                      <ion-icon name="cash" item-start class="text-warning"></ion-icon>
+                      Phone number (Optional)
+                  </ion-label>
+
+                  <ion-input type="number" aria-placeholder="0773XXXXXX" [(ngModel)]="new_case.reporter_phone"
+                      name="reporter_phone"></ion-input>
+              </ion-item>
+
+              <ion-item>
+                  <ion-label position="floating" style="color: #6d0101;">
+                      <ion-icon name="cash" item-start class="text-warning"></ion-icon>
+                      Email (Optional)
+                  </ion-label>
+
+                  <ion-input type="email" [(ngModel)]="new_case.reporter_email" name="reporter_email"></ion-input>
+              </ion-item>
+
+              <ion-item style="margin-bottom: 4% !important;">
+                  <ion-label position="floating" style="color: #6d0101;">
+                      <!-- <ion-icon name="cash" item-start class="text-warning"></ion-icon> -->
+                      
+                  </ion-label>
+
+                  <textarea placeholder="Address (Optional)" rows="5" cols="35" [(ngModel)]="new_case.reporter_address" name="reporter_address"
+                      class="form-control"></textarea>
+
+              </ion-item>
+
+              <ion-button type="submit" expand="block" (click)="register()">
+                  <ion-icon slot="icon-only" name="log-in"></ion-icon>
+                  Save Report
+              </ion-button>
+          </div>
+      </form>
+  </div>
+
+  <div *ngIf="loading" class="text ion-text-center myloader">
+      <img height="200" width="auto" src="assets/imgs/tenor.gif">
+      <div class="text">
+          Loading....
+      </div>
+  </div>
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar color="light">
+      <div class="fbButtons">
+          <!-- back to home -->
+          <ion-button (click)="backtoHomeFun()" *ngIf="backtoHome === 'true'">
+              <ion-icon slot="start" color="light" name="arrow-back"></ion-icon>
+              Back
+          </ion-button>
+
+          <!-- back to location -->
+          <ion-button (click)="backtoLocation1Fun()" *ngIf="backtoLocation1 === 'true'">
+              <ion-icon slot="start" color="light" name="arrow-back"></ion-icon>
+              Back
+          </ion-button>
+
+          <!-- back to victim details -->
+          <ion-button (click)="backtoVicFun()" *ngIf="backtoVicBtn === 'true'">
+              <ion-icon slot="start" color="light" name="arrow-back"></ion-icon>
+              Back
+          </ion-button>
+
+          <!-- back to what transpired -->
+          <ion-button (click)="backtowhatTrans()" *ngIf="backtowhatTranspired === 'true'">
+              <ion-icon slot="start" color="light" name="arrow-back"></ion-icon>
+              Back
+          </ion-button>
+
+          <!-- back to what transpired -->
+          <ion-button (click)="backtoPerpFun()" *ngIf="backtoPerp === 'true'">
+              <ion-icon slot="start" color="light" name="arrow-back"></ion-icon>
+              Back
+          </ion-button>
+
+          <!-- goto location and stuff -->
+          <ion-button *ngIf="gotoLocation1 === 'false'" (click)="gotoLocation1Fun()" slot="end" style="float: right;">
+              Next
+              <ion-icon slot="end" color="light" name="arrow-forward"></ion-icon>
+          </ion-button>
+
+          <!-- go to add victims -->
+          <ion-button *ngIf="gotoVictimBtn === 'true'" (click)="gotoVictimFun()" slot="end" style="float: right;">
+              Next
+              <ion-icon slot="end" color="light" name="arrow-forward"></ion-icon>
+          </ion-button>
+
+          <!-- goto add pep -->
+          <ion-button *ngIf="gotoPepBtn === 'true'" (click)="gotoPepFun()" slot="end" style="float: right;">
+              Next
+              <ion-icon slot="end" color="light" name="arrow-forward"></ion-icon>
+          </ion-button>
+
+          <!-- go to what transpired -->
+          <ion-button *ngIf="locationName1 === 'true'" (click)="gotoWhatTrans()" slot="end" style="float: right;">
+              Next
+              <ion-icon slot="end" color="light" name="arrow-forward"></ion-icon>
+          </ion-button>
+
+          <!-- goto contact info -->
+          <ion-button *ngIf="contactInfoBtn === 'true'" (click)="gotoContactInfo()" slot="end" style="float: right;">
+              Next
+              <ion-icon slot="end" color="light" name="arrow-forward"></ion-icon>
+          </ion-button>
+      </div>
+  </ion-toolbar>
+</ion-footer>
