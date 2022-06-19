@@ -43,6 +43,7 @@ export class ReportIncidentPage implements OnInit {
   backButtton = 'flase';
 
   otherOption1 = 'false';
+  otherKind1 = 'false';
   murderOption1 = 'false';
   locationName1 = 'false';
   locationName2 = 'false';
@@ -321,6 +322,17 @@ export class ReportIncidentPage implements OnInit {
     });
   }
 
+  textOnlyValidation(event: any) {
+    // event = event.target.value;
+    const pattern = /^[a-zA-Z, ]+$/g;
+    const inputChar = String.fromCharCode(event.charCode);
+
+    if (!pattern.test(inputChar)) {
+      // invalid character, prevent input
+      event.preventDefault();
+    }
+  }
+
   async getLocation() {
     const position = await Geolocation.getCurrentPosition();
     this.latitude = position.coords.latitude;
@@ -379,6 +391,7 @@ export class ReportIncidentPage implements OnInit {
 
     //Exposure to pollutants
     ep_what_kind: '',
+    ep_type: '',
     ep_source: '',
     ep_source_description: '',
     ep_num_people_exposed: '',
@@ -390,6 +403,8 @@ export class ReportIncidentPage implements OnInit {
     ll_families_affected: '',
 
     // Desecration of cultural heritage including graves
+    dc_what_kind: '',
+    dc_other_kind: '',
     dc_how_many_graves: '',
     dc_who_desecrated_them: '',
 
@@ -608,7 +623,7 @@ export class ReportIncidentPage implements OnInit {
       this.torture = 'false';
     }
     // Reduced freedom of movement
-    if (event === 'Reduced freedom of movement') {
+    if (event === 'Restricted freedom of movement') {
       this.freedom = 'true';
     } else {
       this.freedom = 'false';
@@ -697,6 +712,14 @@ export class ReportIncidentPage implements OnInit {
       this.otherOption1 = 'true';
     } else {
       this.otherOption1 = 'false';
+    }
+  }
+
+  otherKind(event) {
+    if (event === 'other') {
+      this.otherKind1 = 'true';
+    } else {
+      this.otherKind1 = 'false';
     }
   }
 
