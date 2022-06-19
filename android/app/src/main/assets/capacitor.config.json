@@ -1,5 +1,5 @@
 {
-	"appId": "io.ionic.starter",
+	"appId": "org.cnrgzim.eyewitness",
 	"appName": "EyeWitness",
 	"webDir": "www",
 	"bundledWebRuntime": false
