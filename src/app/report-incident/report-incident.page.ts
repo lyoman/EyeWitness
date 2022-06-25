@@ -16,6 +16,8 @@ import { ApiService } from '../services/api.service';
 })
 export class ReportIncidentPage implements OnInit {
 
+  hideForSV = 'false';
+
   fileToUpload: File = null;
   fileToUpload1: File = null;
   fileToUpload2: File = null;
@@ -96,27 +98,85 @@ export class ReportIncidentPage implements OnInit {
     // this.gotoLocation1 = "false";
   }
 
-  gotoVictimFun() {
-    this.locationName1 = 'false';
-    this.locationDiv = 'false';
-    this.victimDiv = 'true';
-    // this.gotoLocation1 = "false";
-    this.gotoVictimBtn = 'false';
-    this.gotoPepBtn = 'true';
-    this.backtoHome = 'false';
-    this.backtoLocation1 = 'true';
-    this.gotoLocation1 = 'true';
-    // this.backtoLocation1 = "false";
+  gotoVictimFun(id) {
+
+    if (id === 'Sexual violence') {
+      this.whatTranspired = 'true';
+      this.locationName1 = 'false';
+      // this.backtoLocation1 = 'false';
+      this.backtoHome = 'false';
+      this.contactInfoBtn = 'true';
+      this.gotoLocation1 = 'true';
+      this.backtowhatTranspired = 'false';
+      this.backtoVicBtn = 'false';
+      // this.backtoPerp = 'true';
+      this.backtoLocation1 = 'true';
+      this.pepDiv = 'false';
+      this.locationDiv = 'false';
+      this.gotoVictimBtn = 'false';
+      this.backtoPerp = 'false';
+    } else {
+      this.locationName1 = 'false';
+      this.locationDiv = 'false';
+      this.victimDiv = 'true';
+      // this.gotoLocation1 = "false";
+      this.gotoVictimBtn = 'false';
+      this.gotoPepBtn = 'true';
+      this.backtoHome = 'false';
+      this.backtoLocation1 = 'true';
+      this.gotoLocation1 = 'true';
+      // this.backtoLocation1 = "false";
+    }
   }
 
-  backtoVicFun() {
-    this.pepDiv = 'false';
-    this.backtoVicBtn = 'false';
-    this.backtoLocation1 = 'true';
-    this.gotoVictimBtn = 'false';
-    this.victimDiv = 'true';
-    this.gotoPepBtn = 'true';
-    this.locationName1 = 'false';
+  backtoVicFun(id) {
+    if (id === 'Loss of land or economic assets') {
+
+      this.pepDiv = 'false';
+      this.backtoVicBtn = 'false';
+      this.backtoLocation1 = 'true';
+      this.gotoVictimBtn = 'false';
+      this.whatTranspired = 'false';
+      this.victimDiv = 'true';
+      this.gotoPepBtn = 'true';
+      this.locationName1 = 'false';
+      this.backtoVicBtn = 'false';
+      this.contactInfoBtn = 'false';
+      this.contactInfo = 'false';
+
+    }
+    else if (id === 'Desecration of cultural heritage including graves') {
+      this.pepDiv = 'false';
+      this.backtoVicBtn = 'false';
+      this.backtoLocation1 = 'true';
+      this.gotoVictimBtn = 'false';
+      this.victimDiv = 'true';
+      this.gotoPepBtn = 'true';
+      this.locationName1 = 'false';
+      this.backtoVicBtn = 'false';
+    }
+
+    else if (id === 'Torture, intimidation and harassment' || 'Restricted freedom of movement') {
+      this.pepDiv = 'false';
+      this.backtoVicBtn = 'false';
+      this.backtoLocation1 = 'true';
+      this.gotoVictimBtn = 'false';
+      this.victimDiv = 'true';
+      this.gotoPepBtn = 'true';
+      this.locationName1 = 'false';
+      this.backtoVicBtn = 'false';
+    }
+
+    else {
+      this.pepDiv = 'false';
+      this.backtoVicBtn = 'false';
+      this.backtoLocation1 = 'true';
+      this.gotoVictimBtn = 'false';
+      this.victimDiv = 'false';
+      this.gotoPepBtn = 'true';
+      this.locationName1 = 'false';
+      this.backtoVicBtn = 'false';
+    }
   }
 
   backtoPerpFun() {
@@ -128,36 +188,88 @@ export class ReportIncidentPage implements OnInit {
     this.backtoPerp = 'false';
   }
 
-  gotoPepFun() {
-    this.victimDiv = 'false';
-    this.pepDiv = 'true';
-    this.backtoVicBtn = 'true';
-    this.backtoLocation1 = 'false';
-    this.gotoPepBtn = 'false';
-    this.locationName1 = 'true';
+  gotoPepFun(id) {
+    if (id === 'Loss of land or economic assets') {
+      this.contactInfo = 'false';
+      this.whatTranspired = 'true';
+      this.backtoLocation1 = 'false';
+      this.gotoPepBtn = 'false';
+      this.contactInfoBtn = 'true';
+      this.backtowhatTranspired = 'false';
+      this.backtoPerp = 'false';
+      this.victimDiv = 'false';
+      this.backtoVicBtn = 'true';
+
+    }
+
+    else {
+      this.victimDiv = 'false';
+      this.pepDiv = 'true';
+      this.backtoVicBtn = 'true';
+      this.backtoLocation1 = 'false';
+      this.gotoPepBtn = 'false';
+      this.locationName1 = 'true';
+    }
   }
 
-  gotoWhatTrans() {
-    this.whatTranspired = 'true';
-    this.locationName1 = 'false';
-    this.backtoLocation1 = 'false';
-    this.backtoHome = 'false';
-    this.contactInfoBtn = 'true';
-    this.gotoLocation1 = 'true';
-    this.backtowhatTranspired = 'false';
-    this.backtoVicBtn = 'false';
-    this.backtoPerp = 'true';
-    this.pepDiv = 'false';
+  gotoWhatTrans(id) {
+    if (id === 'Loss of land or economic assets') {
+      this.whatTranspired = 'true';
+      this.locationName1 = 'false';
+      this.backtoLocation1 = 'false';
+      this.backtoHome = 'false';
+      this.contactInfoBtn = 'true';
+      this.gotoLocation1 = 'true';
+      this.backtowhatTranspired = 'false';
+      this.backtoVicBtn = 'true';
+      this.backtoPerp = 'false';
+      this.pepDiv = 'false';
+      this.victimDiv = 'false';
+    } else {
+      this.whatTranspired = 'true';
+      this.locationName1 = 'false';
+      this.backtoLocation1 = 'false';
+      this.backtoHome = 'false';
+      this.contactInfoBtn = 'true';
+      this.gotoLocation1 = 'true';
+      this.backtowhatTranspired = 'false';
+      this.backtoVicBtn = 'false';
+      this.backtoPerp = 'true';
+      this.pepDiv = 'false';
+    }
+
 
   }
 
-  backtowhatTrans() {
-    this.contactInfo = 'false';
-    this.whatTranspired = 'true';
-    this.backtowhatTranspired = 'false';
-    this.backtoPerp = 'true';
-    this.backtoHome = 'false';
-    this.contactInfoBtn = 'true';
+  backtowhatTrans(id) {
+
+    if (id === 'Sexual violence') {
+      this.backtoPerp = 'false';
+      this.backtoLocation1 = 'true';
+      this.backtoHome = 'false';
+      this.contactInfoBtn = 'true';
+      this.contactInfo = 'false';
+      this.whatTranspired = 'true';
+      this.backtowhatTranspired = 'false';
+
+    } else if (id === 'Loss of land or economic assets') {
+      this.contactInfo = 'false';
+      this.whatTranspired = 'true';
+      this.backtowhatTranspired = 'false';
+      this.backtoPerp = 'false';
+      this.backtoHome = 'false';
+      this.contactInfoBtn = 'true';
+      this.backtoVicBtn = 'true';
+    }
+
+    else {
+      this.contactInfo = 'false';
+      this.whatTranspired = 'true';
+      this.backtowhatTranspired = 'false';
+      this.backtoPerp = 'true';
+      this.backtoHome = 'false';
+      this.contactInfoBtn = 'true';
+    }
   }
 
   backtoLocation1Fun() {
@@ -174,13 +286,26 @@ export class ReportIncidentPage implements OnInit {
   }
 
 
-  gotoContactInfo() {
-    this.contactInfo = 'true';
-    this.whatTranspired = 'false';
-    this.backtoLocation1 = 'false';
-    this.contactInfoBtn = 'false';
-    this.backtowhatTranspired = 'true';
-    this.backtoPerp = 'false';
+  gotoContactInfo(id) {
+    if (id === 'Loss of land or economic assets') {
+      this.contactInfo = 'true';
+      this.whatTranspired = 'false';
+      this.backtoLocation1 = 'false';
+      this.contactInfoBtn = 'false';
+      this.backtowhatTranspired = 'true';
+      this.backtoPerp = 'false';
+      this.backtoVicBtn = 'false';
+    }
+
+    else {
+      this.contactInfo = 'true';
+      this.whatTranspired = 'false';
+      this.backtoLocation1 = 'false';
+      this.contactInfoBtn = 'false';
+      this.backtowhatTranspired = 'true';
+      this.backtoPerp = 'false';
+    }
+
   }
 
   ivCompany(states) {
@@ -411,6 +536,7 @@ export class ReportIncidentPage implements OnInit {
     // Torture, intimidation and harassment
     ti_type: '',
     ti_other: '',
+    ti_age: '',
     ti_groups_affected: '',
     ti_who_did_this: '',
     ti_company_involved: '',
@@ -418,16 +544,25 @@ export class ReportIncidentPage implements OnInit {
 
     // Reduced freedom of movement
     rf_company_involved: '',
+    rf_age: '',
+    rf_victim: '',
+    rf_perpetrator: '',
 
     // Limited access to water
     la_company_involved: '',
+    la_victim: '',
+    la_age: '',
 
     // Forced and unpaid labour
     fu_company_involved: '',
+    fu_victim: '',
+    fu_age: '',
 
     // Child labour
     cl_company_involved: '',
     cl_number_of_children: '',
+    cl_gender: '',
+    cl_nature_of_work: '',
 
     // Evidence of smuggling
     es_which_resource: '',
@@ -445,6 +580,7 @@ export class ReportIncidentPage implements OnInit {
     mk_number_of_people: '',
     mk_how_they_died: '',
     mk_murder_other: '',
+    mk_age: '',
     mk_company_involved: '',
 
     what_happened: '',
@@ -585,7 +721,10 @@ export class ReportIncidentPage implements OnInit {
   perpetratorArray = [];
   companyArray = [];
 
+  pickedV: any;
+
   violationType(event) {
+    this.pickedV = event;
     console.log('event', event);
     if (event === 'Forced displacement') {
       this.forced = 'true';
@@ -655,6 +794,7 @@ export class ReportIncidentPage implements OnInit {
     //Sexual violence
     if (event === 'Sexual violence') {
       this.violence = 'true';
+      this.hideForSV = 'true';
     } else {
       this.violence = 'false';
     }
